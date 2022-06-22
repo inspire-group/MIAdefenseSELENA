@@ -6,7 +6,7 @@ Code for "Mitigating Membership Inference Attacks by Self-Distillation Through a
 ## Files
 ```shell
 ├── MIAdefenseSELENA
-|    ├── env.yml      # specify root_dir (ending with MIA_root_dir) and src_dir (ending with MIA_AE)
+|    ├── env.yml      # specify root_dir and src_dir (ending with MIAdefenseSELENA)
 |    ├── requirement.txt
 |    ├── utils.py
 |    ├── cifar_utils.py
@@ -44,7 +44,7 @@ Code for "Mitigating Membership Inference Attacks by Self-Distillation Through a
 |    |	            ├── generation10.py # generate non_model indices for attacker's shadow Split-AI
 |    |	            ├── train.py        # train the attacker's shadow Split-AI
 |    |	            └── eval.py         # evaluate the distillation model (i.e., the final output protected model) via adaptive attacks
-|    ├── texas    # The file structure in this folder is the same as in MIA_AE/purchase
+|    ├── texas    # The file structure in this folder is the same as in MIAdefenseSELENA/purchase
 |    ├── cifar100
 |    |    ├── data_partition.py  # generate * npy files for member/nonmember sets to train/eval MIA attacks 
 |    |	  ├── Undefend
