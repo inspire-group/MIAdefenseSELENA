@@ -1,7 +1,5 @@
-# MIAdefenseSELENA
-By Xinyu Tang, Saeed Mahloujifar, Liwei Song, Virat Shejwalkar, Milad Nasr, Amir Houmansadr, Prateek Mittal
-
-Code for "Mitigating Membership Inference Attacks by Self-Distillation Through a Novel Ensemble Architecture" in USENIX Security 2022.
+# Overview
+This document provides a detailed guide to reproduce experimental results in the main body of our MIAdefenseSELENA paper, i.e. Table 2.
 
 ## Files
 ```shell
@@ -128,35 +126,97 @@ The code is tested with python 3.8.5, PyTorch 1.11.0 (for most of the experiment
 - CIFAR100 [[downloading link](http://www.cs.toronto.edu/~kriz/cifar.html)] (download the cifar100 dataset cifar-100-python.tar.gz and untar it to MIA_root_dir/cifar100/data)
 - You may refer [Adversarial Regularization](https://github.com/SPIN-UMass/ML-Privacy-Regulization) on how to load Purchase100/Texas100 . After preparing corresponding files following the files structure, and specifying your env.yml, you can proceed to usage.
 
-
 ## Usage
-- You may refer file structures and comments in [`Files`](./README.md#files).
-- See [`misc/reproducibility.md`](./misc/reproducibility.md) for instructions to reproduce all results in the main body of paper.
+You may refer file structures and comments in [`Files`](./reproducibility.md#files).
 
-## Notes 
-Some variable names may not be consistent (and kind of confusing). The following variable names are equivalent.
-- train_member_label/know_train_label/train_label_tr: for member sets to train MIA model.
-- test_member_label/unknow_train_label_train_label_te: for member sets to eval MIA model.
-- train_nonmember_label/ref_label/attack_label: for nonmember sets to train MIA model.
-- test_nonmember_label/test_label: for nonmember sets to eval MIA model.
+For each dataset $datasetname (purchase/texas/cifar100)
 
-
-## Reference Repository
-* Adversarial Regularization: https://github.com/SPIN-UMass/ML-Privacy-Regulization
-* MemGuard: https://github.com/jinyuan-jia/MemGuard
-* Systematic direct single-query attacks: https://github.com/inspire-group/membership-inference-evaluation
-* Label-only attacks: https://github.com/cchoquette/membership-inference
-
-
-## Citations
-
-If you find our work useful in your research, please consider citing:
-
-```tex
-@inproceedings{tang2022miadefenseselena,
-  title={Mitigating Membership Inference Attacks by Self-Distillation Through a Novel Ensemble Architecture},
-  author={Tang, Xinyu and Mahloujifar, Saeed and Song, Liwei and Shejwalkar, Virat and Nasr, Milad and Houmansadr, Amir and Mittal, Prateek},
-  booktitle = {31st {USENIX} Security Symposium ({USENIX} Security)},
-  year={2022}
-}
+First of all, generate the npy files for member/nonmember sets to train/eval MIA attacks 
 ```
+cd $datasetname
+python data_partition.py
+```
+
+### SELENA
+First prepare the non_model indices for defenfer's Split-AI
+```
+cd $datasetname/SELENA/
+python generate10.py
+```
+Then train the models for Split-AI
+```
+cd $datasetname/SELENA/Split_AI
+python train.py
+```
+Next train the model from self-distillation from Split-AI
+```
+cd $datasetname/SELENA/Distillation
+python train.py
+```
+To evaluate the final protected model (models via self-distillation from Split-AI) through direct single-query attacks and label-only attacks.
+```
+python eval.py
+``` 
+For purchase100/texas100, eval.py includes direct single-query attacks and label-only attacks.
+For cifar100, eval.py includes direct single-query attacks. eval_aug.py includes data augmentation attacks (label-only). eval_cw.py includes boundary distance attacks (label-only). 
+
+To evaluate the final protected model (models via self-distillation from Split-AI) through adaptive attacks.
+
+First prepare the non_model indices for attacker's shadow Split-AI
+```
+cd $datasetname/SELENA/adaptive_attack
+python generate10.py
+```
+Then train attacker's shadow Split-AI
+```
+python train.py
+```
+Next evaluate the final protected model (models via self-distillation from Split-AI) through adaptive attacks.
+```
+python eval.py
+```
+
+### undefended model:
+To train a undefended model
+```
+cd $datasetname/undefend
+python train.py
+```
+To evaluate it via MIA attacks
+```
+python eval.py
+```
+For purchase100/texas100, eval.py includes direct single-query attacks and label-only attacks.
+For cifar100, eval.py includes direct single-query attacks. eval_aug.py includes data augmentation attacks (label-only). eval_cw.py includes boundary distance attacks (label-only). 
+### MemGuard
+First train the undefended model following [```undefended-model```](./reproducibility.md#undefended-model)
+
+Download NN MIA attack model via Google drive [link](https://drive.google.com/drive/folders/1Lu8OO1bJZRNrO8o44rSPIZmUlNoyUZNn?usp=sharing) and save to MIA_root_dir/memguard.
+
+To prepare the logits and predictions as inputs to MemGuard
+ ```
+cd $datasetname/MemGuard
+python prepare_for_memguard.py
+```
+To run MemGuard code
+ ```
+python memguard_run.py
+```
+To evaluate MemGuard via direct single-query attacks
+ ```
+python eval_memguard.py
+```
+The label-only attack for MemGuard is the same as that for undefended model, no extra experiment performed.
+
+### Adversarial Regularization
+To train a model via Adversarial Regularization
+```
+cd $datasetname/AdvReg
+python train.py
+```
+To evaluate it via MIA attacks
+```
+python eval.py
+```
+For purchase100/texas100, eval.py includes direct single-query attacks and label-only attacks.
+For cifar100, eval.py includes direct single-query attacks. eval_aug.py includes data augmentation attacks (label-only). eval_cw.py includes boundary distance attacks (label-only). 

@@ -1,0 +1,5 @@
+torch #1.11.0
+numpy
+pyyaml
+tensorflow #2.x
+scikit-learn
