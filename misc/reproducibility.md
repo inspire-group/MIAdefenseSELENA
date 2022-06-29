@@ -8,12 +8,13 @@ This document provides a detailed guide to reproduce experimental results in the
 |    ├── requirement.txt
 |    ├── utils.py
 |    ├── cifar_utils.py
+|    ├── prepare_dataset.py     #prepare purhcase100 (X,npy, Y.npy) and texas100 (feats.npy, labels.npy)
 |    ├── attack
 |    |    ├── dsq_attack.py               # direct single-query attacks on purchase100/texas100/cifar100
 |    |    ├── binary_flip_noise_attack.py # label-only attacks on purchase100/texas100
 |    |	  ├── Aug_Attack.py               # augmenation attacks (data augmentation attacks, label-only) on cifar100
 |    |    ├── CW_Attack.py                # cw attacks (boundary attacks, label-only) on cifar100
-|    | 	  └── adaptive_attack.py          # adaptive attacks for SELENA on purchase100/texas100/cifar100 on
+|    | 	  └── adaptive_attack.py          # adaptive attacks for SELENA on purchase100/texas100/cifar100
 |    ├── models
 |    |    ├── purchase.py # model for Purchase100
 |    |	  ├── texas.py    # model for Texas100
@@ -121,10 +122,15 @@ Specify you ```root_dir``` and ```src_dir``` in env.yml
 The code is tested with python 3.8.5, PyTorch 1.11.0 (for most of the experiments) and TensorFlow-2.9.1 (for MemGuard). The complete list of required packages are available in `requirement.txt`, and can be installed with `pip install -r requirement.txt`.
 
 ## Datasets
-- Purchase100 [[downloading link](https://www.comp.nus.edu.sg/~reza/files/dataset_purchase.tgz)] (needs to be converted to X.npy and Y.npy and save to MIA_root_dir/purchase/data)
-- Texas100 [[downloading link](https://www.comp.nus.edu.sg/~reza/files/dataset_texas.tgz)] (needs to be converted to feats.npy and labels.npy and save to MIA_root_dir/texas/data)
-- CIFAR100 [[downloading link](http://www.cs.toronto.edu/~kriz/cifar.html)] (download the cifar100 dataset cifar-100-python.tar.gz and untar it to MIA_root_dir/cifar100/data)
-- You may refer [Adversarial Regularization](https://github.com/SPIN-UMass/ML-Privacy-Regulization) on how to load Purchase100/Texas100 . After preparing corresponding files following the files structure, and specifying your env.yml, you can proceed to usage.
+- Purchase100 [[download link](https://www.comp.nus.edu.sg/~reza/files/dataset_purchase.tgz)] (needs to be converted to X.npy and Y.npy further by [```prepare_dataset.py```](./../prepare_dataset.py)) and save to MIA_root_dir/tmp)
+- Texas100 [[download link](https://www.comp.nus.edu.sg/~reza/files/dataset_texas.tgz)] (needs to be converted to feats.npy and labels.npy further by [```prepare_dataset.py```](./../prepare_dataset.py)) and save to MIA_root_dir/tmp)
+- CIFAR100 [[download link](http://www.cs.toronto.edu/~kriz/cifar.html)] (download the cifar100 dataset cifar-100-python.tar.gz and untar it to MIA_root_dir/cifar100/data)
+- To prepare purchase100 and texas100, after downloading the above two tar files to MIA_root_dir/tmp
+```
+python prepare_datatset.py
+```
+- After preparing corresponding files following the files structure, and specifying your env.yml, you can proceed to usage.
+
 
 ## Usage
 You may refer file structures and comments in [`Files`](./reproducibility.md#files).
