@@ -8,7 +8,8 @@ This document provides a detailed guide to reproduce experimental results in the
 |    ├── requirement.txt
 |    ├── utils.py
 |    ├── cifar_utils.py
-|    ├── prepare_dataset.py     #prepare purhcase100 (X,npy, Y.npy) and texas100 (feats.npy, labels.npy)
+|    ├── prepare_dataset.py     # prepare purhcase100 (X,npy, Y.npy) and texas100 (feats.npy, labels.npy)
+|    ├── early_stopping.py      # load checkpoints saved in each epoch during undefended training, launch direct single-query attacks and plot Figure 4 in the paper.
 |    ├── attack
 |    |    ├── dsq_attack.py               # direct single-query attacks on purchase100/texas100/cifar100
 |    |    ├── binary_flip_noise_attack.py # label-only attacks on purchase100/texas100
@@ -226,3 +227,13 @@ python eval.py
 ```
 For purchase100/texas100, eval.py includes direct single-query attacks and label-only attacks.
 For cifar100, eval.py includes direct single-query attacks. eval_aug.py includes data augmentation attacks (label-only). eval_cw.py includes boundary distance attacks (label-only). 
+
+### Figure 4 in Paper:
+First train the undefended model following [```undefended-model```](./reproducibility.md#undefended-model). The script saves checkpoints for each epoch during the undefended model training.
+
+[early_stopping.py](./../early_stopping.py) will load checkpoints saved in each epoch during undefended training, launch direct single-query attacks and plot Figure 4 in the paper.
+
+```
+python early_stopping.py
+```
+Please note that SELENA test accuracy and SELENA MIA accuracy are from Table 2.

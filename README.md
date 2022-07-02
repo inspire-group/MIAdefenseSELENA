@@ -10,7 +10,8 @@ Code for "Mitigating Membership Inference Attacks by Self-Distillation Through a
 |    ├── requirement.txt
 |    ├── utils.py
 |    ├── cifar_utils.py
-|    ├── prepare_dataset.py     #prepare purhcase100 (X,npy, Y.npy) and texas100 (feats.npy, labels.npy)
+|    ├── prepare_dataset.py     # prepare purhcase100 (X,npy, Y.npy) and texas100 (feats.npy, labels.npy)
+|    ├── early_stopping.py      # load checkpoints saved in each epoch during undefended training, launch direct single-query attacks and plot Figure 4 in the paper.
 |    ├── attack
 |    |    ├── dsq_attack.py               # direct single-query attacks on purchase100/texas100/cifar100
 |    |    ├── binary_flip_noise_attack.py # label-only attacks on purchase100/texas100

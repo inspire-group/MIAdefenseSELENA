@@ -306,3 +306,5 @@ def system_attack(train_member_pred,train_member_label,test_member_pred,test_mem
     nn_acc = nn_attack(train_member_pred,train_member_label,train_nonmember_pred,train_nonmember_label,test_member_pred,test_member_label,test_nonmember_pred,test_nonmember_label, attack_epochs=150, batch_size=512,num_class=100)
 
     print("Best direct single-query attack acc: {:.4f}. NN attack: {:.4f}. Correctness: {:.4f}. Global|Class:  Conf:{:.4f}|{:.4f}. Entr: {:.4f}|{:.4f}. Mentr: {:.4f}|{:.4f}".format(max(entr_acc,mentr_acc,conf_acc,corr_acc,nn_acc),nn_acc,corr_acc,conf_acc_g,conf_acc_c,entr_acc_g,entr_acc_c,mentr_acc_g,mentr_acc_c))
+
+    return max(entr_acc,mentr_acc,conf_acc,corr_acc,nn_acc)
