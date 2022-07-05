@@ -39,7 +39,7 @@ def splitai_test(testloader, model, criterion, len_data, ckpt_path, non_model_al
     losses = AverageMeter()
 
     num_class = args.num_class
-    batch_size = args.batch_size
+    batch_size = args.test_batch_size
     split_model = args.K
     non_model = args.L
 
@@ -63,9 +63,10 @@ def splitai_test(testloader, model, criterion, len_data, ckpt_path, non_model_al
             model = model.to(device,torch.float)
             model.eval()
 
-            tmp_outputs = (F.softmax(model(inputs),dim=1)).detach().cpu().numpy()
-            tmp_outputs_np[model_ind,:,:] = tmp_outputs
+            with torch.no_grad():
+                tmp_outputs = (F.softmax(model(inputs),dim=1)).detach().cpu().numpy()
 
+            tmp_outputs_np[model_ind,:,:] = tmp_outputs
             outputs_conf[model_ind,:] = np.max(tmp_outputs, axis = 1)
         
         temp = np.zeros(split_model)
@@ -288,9 +289,9 @@ def main():
     teset = Cifardata(train_data_te_attack, train_label_te_attack, transform_test)
     alltestset = Cifardata(all_test_data, all_test_label, transform_test)
 
-    args.batch_size=2048
-    traintestloader = torch.utils.data.DataLoader(traintestset, batch_size=args.batch_size,shuffle=False,num_workers=num_worker)
-    testloader = torch.utils.data.DataLoader(testset, batch_size=args.batch_size,shuffle=False,num_workers=num_worker)
+    args.test_batch_size=2048
+    traintestloader = torch.utils.data.DataLoader(traintestset, batch_size=args.test_batch_size,shuffle=False,num_workers=num_worker)
+    testloader = torch.utils.data.DataLoader(testset, batch_size=args.test_batch_size,shuffle=False,num_workers=num_worker)
 
 
     original_train_label = train_label.copy()
