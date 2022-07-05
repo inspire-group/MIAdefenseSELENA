@@ -55,3 +55,17 @@ def print_acc_conf(infer_np, test_labels):
     print("Total data: {:d}. Average acc: {:.4f}. Average confidence: {:.4f}.".format(len(infer_np), acc_avg, conf_avg))
 
     return acc_avg, conf_avg
+
+class binarydata(data.Dataset):
+    def __init__(self, data, labels):
+        self.data = data
+        self.labels = labels
+
+    def __getitem__(self, index):
+        img =  self.data[index]
+        label = self.labels[index]
+
+        return img, label
+
+    def __len__(self):
+        return len(self.labels)    
