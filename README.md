@@ -140,11 +140,19 @@ python prepare_datatset.py
 - See [`misc/reproducibility.md`](./misc/reproducibility.md) for instructions to reproduce all results in the main body of paper.
 
 ## Notes 
-Some variable names may not be consistent (and kind of confusing). The following variable names are equivalent.
-- train_member_label/know_train_label/train_label_tr: for member sets to train MIA model.
-- test_member_label/unknow_train_label_train_label_te: for member sets to eval MIA model.
-- train_nonmember_label/ref_label/attack_label: for nonmember sets to train MIA model.
-- test_nonmember_label/test_label: for nonmember sets to eval MIA model.
+- The initial repo selects the model that performs best on the test set for final evaluation. We have tested that the bias issue is not significant on evaluated datasets(Purchase100/Texas100/CIFAR100). For further usage, it's advisable to use a validation set to select the model and final evaluate on the test set to avoid potential bias issue.
+
+- If some memory issues in [Distillation/train.py](./cifar100/SELENA/Distillation/train.py) occurs (examples below), you may consider decreasing [```test_batch_size```](./cifar100/SELENA/Distillation/train.py#L292) (The initial intention to set a large test_batch_size is to utilize gpu computation at maximum and save time on Split-AI inference)).
+
+```shell
+ERROR: Unexpected bus error encountered in worker. This might be caused by insufficient shared memory (shm).
+```
+
+- Some variable names may not be consistent (and kind of confusing). The following variable names are equivalent.
+  - train_member_label/know_train_label/train_label_tr: for member sets to train MIA model.
+  - test_member_label/unknow_train_label_train_label_te: for member sets to eval MIA model.
+  - train_nonmember_label/ref_label/attack_label: for nonmember sets to train MIA model.
+  - test_nonmember_label/test_label: for nonmember sets to eval MIA model.
 
 
 ## Reference Repository

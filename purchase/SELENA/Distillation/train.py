@@ -205,7 +205,6 @@ def main():
     parser.add_argument('--classifier_epochs', type=int, default=60, help='attack epochs in NN attack')
     parser.add_argument('--batch_size', type=int, default=512, help='batch size')
     parser.add_argument('--num_class', type=int, default=100, help='num class')
-    parser.add_argument('--config_file', type=str, default='./../../../env.yml', help='configuration for src file directory and data/ckpts directory')
 
     args = parser.parse_args()
     print(dict(args._get_kwargs()))
