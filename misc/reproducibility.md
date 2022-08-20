@@ -125,7 +125,7 @@ Before running code, you may need to follow these three steps to prepare:
 
 - Installing required packages. The code is tested with python 3.8.5, PyTorch 1.11.0 (for most of the experiments) and TensorFlow-2.9.1 (for MemGuard). The complete list of required packages are available in `requirement.txt`, and can be installed with `pip install -r requirement.txt`.
 
-- Preparing Datasets (and move pretrained NN MIA attack model to assumed file path MIA_root_dir/memguard). We use three datasets: Purchase100 [[link](https://www.comp.nus.edu.sg/~reza/files/dataset_purchase.tgz)], Texas100 [[link](https://www.comp.nus.edu.sg/~reza/files/dataset_texas.tgz)], CIFAR100 [[link](http://www.cs.toronto.edu/~kriz/cifar.html)]. You can prepare all three datasets by simply running the following command (this command will also move the pretrained NN MIA attack model for MemGuard to the assumed file path MIA_root_dir/memguard):
+- Preparing Datasets and pretrained NN MIA attack model for memguard. We use three datasets: Purchase100 [[link](https://www.comp.nus.edu.sg/~reza/files/dataset_purchase.tgz)], Texas100 [[link](https://www.comp.nus.edu.sg/~reza/files/dataset_texas.tgz)], CIFAR100 [[link](http://www.cs.toronto.edu/~kriz/cifar.html)]. You can prepare all three datasets by simply running the following command (this command will also move the pretrained NN MIA attack model for MemGuard to the assumed file path MIA_root_dir/memguard):
 ```
 python prepare_datatset.py
 ```
