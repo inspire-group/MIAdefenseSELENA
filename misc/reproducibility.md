@@ -4,6 +4,7 @@ This document provides a detailed guide to reproduce experimental results in the
 ## Files
 ```shell
 ├── MIAdefenseSELENA
+|    ├── memguard      # pretrained NN MIA attack model for MemGuard
 |    ├── env.yml      # specify root_dir and src_dir (ending with MIAdefenseSELENA)
 |    ├── requirement.txt
 |    ├── utils.py
@@ -117,21 +118,17 @@ This document provides a detailed guide to reproduce experimental results in the
           └── checkpoints # files in this folder have the same structure as MIA_root_dir/purchase/checkpoints (and will be created after running the corresponding codes)      
 ```
 
-Specify you ```root_dir``` and ```src_dir``` in env.yml
+## Getting Started
+Before running code, you may need to follow these three steps to prepare:
 
-## Requirements
-The code is tested with python 3.8.5, PyTorch 1.11.0 (for most of the experiments) and TensorFlow-2.9.1 (for MemGuard). The complete list of required packages are available in `requirement.txt`, and can be installed with `pip install -r requirement.txt`.
+- Specifying you ```root_dir``` and ```src_dir``` in env.yml. ```root_dir``` is the root directory to save the data and checkpoints (corresponds to MIA_root_dir in [`Files`](./README.md#files)). ```src_dir``` is the root directory of the sourcecode (should endwith this repository name ```MIAdefenseSELENA```).
 
-## Datasets
-- Purchase100 [[download link](https://www.comp.nus.edu.sg/~reza/files/dataset_purchase.tgz)] (needs to be converted to X.npy and Y.npy further by [```prepare_dataset.py```](./../prepare_dataset.py)) and save to MIA_root_dir/tmp)
-- Texas100 [[download link](https://www.comp.nus.edu.sg/~reza/files/dataset_texas.tgz)] (needs to be converted to feats.npy and labels.npy further by [```prepare_dataset.py```](./../prepare_dataset.py)) and save to MIA_root_dir/tmp)
-- CIFAR100 [[download link](http://www.cs.toronto.edu/~kriz/cifar.html)] (download the cifar100 dataset cifar-100-python.tar.gz and untar it to MIA_root_dir/cifar100/data)
-- To prepare purchase100 and texas100, after downloading the above two tar files to MIA_root_dir/tmp
+- Installing required packages. The code is tested with python 3.8.5, PyTorch 1.11.0 (for most of the experiments) and TensorFlow-2.9.1 (for MemGuard). The complete list of required packages are available in `requirement.txt`, and can be installed with `pip install -r requirement.txt`.
+
+- Preparing Datasets (and move pretrained NN MIA attack model to assumed file path MIA_root_dir/memguard). We use three datasets: Purchase100 [[link](https://www.comp.nus.edu.sg/~reza/files/dataset_purchase.tgz)], Texas100 [[link](https://www.comp.nus.edu.sg/~reza/files/dataset_texas.tgz)], CIFAR100 [[link](http://www.cs.toronto.edu/~kriz/cifar.html)]. You can prepare all three datasets by simply running the following command (this command will also move the pretrained NN MIA attack model for MemGuard to the assumed file path MIA_root_dir/memguard):
 ```
 python prepare_datatset.py
 ```
-- After preparing corresponding files following the files structure, and specifying your env.yml, you can proceed to usage.
-
 
 ## Usage
 You may refer file structures and comments in [`Files`](./reproducibility.md#files).
@@ -198,7 +195,6 @@ For cifar100, eval.py includes direct single-query attacks. eval_aug.py includes
 ### MemGuard
 First train the undefended model following [```undefended-model```](./reproducibility.md#undefended-model)
 
-Download NN MIA attack model via Google drive [link](https://drive.google.com/drive/folders/1Lu8OO1bJZRNrO8o44rSPIZmUlNoyUZNn?usp=sharing) and save to MIA_root_dir/memguard.
 
 To prepare the logits and predictions as inputs to MemGuard
  ```

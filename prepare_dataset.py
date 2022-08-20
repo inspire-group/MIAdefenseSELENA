@@ -4,11 +4,16 @@ import os
 from utils import mkdir_p
 import numpy as np
 import wget
+import shutil
 
 config_file = './env.yml'
 with open(config_file, 'r') as stream:
     yamlfile = yaml.safe_load(stream)
     root_dir = yamlfile['root_dir']
+    src_dir = yamlfile['src_dir']
+##prepare
+shutil.move(os.path.join(src_dir, 'memguard'), os.path.join(root_dir, 'memguard'))
+
 
 ###assumeing two tar files dataset_purcahse.tgz and dataset_texas.tgz are saved in root_dir/tmp.
 ####prepare purchase dataset
@@ -26,12 +31,11 @@ if not os.path.isfile(os.path.join(root_dir, 'tmp', 'cifar-100-python.tar.gz')):
     print("Dowloading cifar100 dataset...")
     wget.download("http://www.cs.toronto.edu/~kriz/cifar-100-python.tar.gz", os.path.join(root_dir, 'tmp', 'cifar-100-python.tar.gz'))
     print('Dataset Dowloaded')
-
-print("Prepare CIFAR100 dataset")
-tar = tarfile.open(os.path.join(root_dir, 'tmp', 'cifar-100-python.tar.gz'))
-tar.extractall(path=os.path.join(root_dir, 'cifar100'))
-os.rename(os.path.join(root_dir, 'cifar100', 'cifar-100-python'), os.path.join(root_dir, 'cifar100', 'data'))
-
+if not os.path.exists(os.path.join(root_dir, 'cifar100', 'data')):
+    print("Prepare CIFAR100 dataset")
+    tar = tarfile.open(os.path.join(root_dir, 'tmp', 'cifar-100-python.tar.gz'))
+    tar.extractall(path=os.path.join(root_dir, 'cifar100'))
+    os.rename(os.path.join(root_dir, 'cifar100', 'cifar-100-python'), os.path.join(root_dir, 'cifar100', 'data'))
 
 print("Prepare Purchase100 dataset")
 tar = tarfile.open(os.path.join(root_dir, 'tmp', 'dataset_purchase.tgz'))
