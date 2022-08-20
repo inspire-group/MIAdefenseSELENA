@@ -62,8 +62,8 @@ def splitai_test(testloader, model, criterion, len_data, ckpt_path, non_model_in
             model.load_state_dict(ckpt['state_dict'])
             model = model.to(device,torch.float)
             model.eval()
-
-            tmp_outputs = (F.softmax(model(inputs),dim=1)).detach().cpu().numpy()
+            with torch.no_grad():
+                tmp_outputs = (F.softmax(model(inputs),dim=1)).detach().cpu().numpy()
             tmp_outputs_np[model_ind,:,:] = tmp_outputs
 
             outputs_conf[model_ind,:] = np.max(tmp_outputs, axis = 1)

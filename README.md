@@ -3,6 +3,9 @@ By Xinyu Tang, Saeed Mahloujifar, Liwei Song, Virat Shejwalkar, Milad Nasr, Amir
 
 Code for "Mitigating Membership Inference Attacks by Self-Distillation Through a Novel Ensemble Architecture" in USENIX Security 2022.
 
+Update 08/2022: We earned all badges (available, functional, reproduced) in USENIX artifact evaluation.
+
+
 ## Files
 ```shell
 ├── MIAdefenseSELENA
@@ -119,21 +122,22 @@ Code for "Mitigating Membership Inference Attacks by Self-Distillation Through a
           └── checkpoints # files in this folder have the same structure as MIA_root_dir/purchase/checkpoints (and will be created after running the corresponding codes)      
 ```
 
-Specify you ```root_dir``` and ```src_dir``` in env.yml
+## Getting Started
+Before running code, you may need to follow these three steps to prepare:
 
-## Requirements
-The code is tested with python 3.8.5, PyTorch 1.11.0 (for most of the experiments) and TensorFlow-2.9.1 (for MemGuard). The complete list of required packages are available in `requirement.txt`, and can be installed with `pip install -r requirement.txt`.
+- Specify you ```root_dir``` and ```src_dir``` in env.yml. ```root_dir``` is the root directory to save the data and checkpoints (corresponds to MIA_root_dir in [`Files`](./README.md#files)). ```src_dir``` is the root directory of the sourcecode (should endwith this repository name ```MIAdefenseSELENA```).
 
-## Datasets
-- Purchase100 [[download link](https://www.comp.nus.edu.sg/~reza/files/dataset_purchase.tgz)] (needs to be converted to X.npy and Y.npy further by [```prepare_dataset.py```](./prepare_dataset.py)) and save to MIA_root_dir/tmp)
-- Texas100 [[download link](https://www.comp.nus.edu.sg/~reza/files/dataset_texas.tgz)] (needs to be converted to feats.npy and labels.npy further by [```prepare_dataset.py```](./prepare_dataset.py)) and save to MIA_root_dir/tmp)
-- CIFAR100 [[download link](http://www.cs.toronto.edu/~kriz/cifar.html)] (download the cifar100 dataset cifar-100-python.tar.gz and untar it to MIA_root_dir/cifar100/data)
-- To prepare purchase100 and texas100, after downloading the above two tar files to MIA_root_dir/tmp
+- Installing required packages.
+  - The code is tested with python 3.8.5, PyTorch 1.11.0 (for most of the experiments) and TensorFlow-2.9.1 (for MemGuard). The complete list of required packages are available in `requirement.txt`, and can be installed with `pip install -r requirement.txt`.
+
+- Prepare Datasets
+  - Purchase100 [[link](https://www.comp.nus.edu.sg/~reza/files/dataset_purchase.tgz)].
+  - Texas100 [[link](https://www.comp.nus.edu.sg/~reza/files/dataset_texas.tgz)]. 
+  - CIFAR100 [[link](http://www.cs.toronto.edu/~kriz/cifar.html)].
+  - You prepare all three datasets by simply running the following command:
 ```
 python prepare_datatset.py
 ```
-- After preparing corresponding files following the files structure, and specifying your env.yml, you can proceed to usage.
-
 
 ## Usage
 - You may refer file structures and comments in [`Files`](./README.md#files).

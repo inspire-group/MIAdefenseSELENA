@@ -39,7 +39,7 @@ def splitai_test(testloader, model, criterion, len_data, ckpt_path, non_model_in
     losses = AverageMeter()
 
     num_class = args.num_class
-    batch_size = args.batch_size
+    batch_size = args.test_batch_size
     split_model = args.K
     non_model = args.L
 
@@ -131,7 +131,8 @@ def main():
     parser.add_argument('--L', type=int, default=10, help='non_model for each sample in split-ai')
     parser.add_argument('--attack_epochs', type=int, default=150, help='attack epochs in NN attack')
     parser.add_argument('--print_epoch_splitai', type=int, default=5, help='print splitai single model training stats per print_epoch_splitai during splitai training')
-    parser.add_argument('--batch_size', type=int, default=2048, help='batch size')
+    parser.add_argument('--batch_size', type=int, default=256, help='batch size')
+    parser.add_argument('--test_batch_size', type=int, default=2048, help='test batch size')
     parser.add_argument('--warmup', type=int, default=1, help='warm up epochs')
     parser.add_argument('--num_worker', type=int, default=1, help='number workers')
     parser.add_argument('--num_class', type=int, default=100, help='num class')
@@ -186,13 +187,13 @@ def main():
     teset = Cifardata(train_data_te_attack, train_label_te_attack, transform_test)
     alltestset = Cifardata(all_test_data, all_test_label, transform_test)
 
-    trloader = torch.utils.data.DataLoader(trset, batch_size=batch_size, shuffle = False, num_workers=num_worker)
-    teloader = torch.utils.data.DataLoader(teset, batch_size=batch_size, shuffle = False, num_workers = num_worker)
-    alltestloader = torch.utils.data.DataLoader(alltestset, batch_size=batch_size, shuffle = False, num_workers = num_worker)
-    trainloader = torch.utils.data.DataLoader(trainset, batch_size=batch_size, shuffle=True, num_workers=num_worker)
-    traintestloader = torch.utils.data.DataLoader(traintestset, batch_size=batch_size, shuffle=False, num_workers=num_worker)
-    testloader = torch.utils.data.DataLoader(testset, batch_size=batch_size, shuffle=False, num_workers=num_worker)
-    refloader = torch.utils.data.DataLoader(refset, batch_size=batch_size, shuffle=False, num_workers=num_worker)
+    trloader = torch.utils.data.DataLoader(trset, batch_size=args.test_batch_size, shuffle = False, num_workers=num_worker)
+    teloader = torch.utils.data.DataLoader(teset, batch_size=args.test_batch_size, shuffle = False, num_workers = num_worker)
+    alltestloader = torch.utils.data.DataLoader(alltestset, batch_size=args.test_batch_size, shuffle = False, num_workers = num_worker)
+    trainloader = torch.utils.data.DataLoader(trainset, batch_size=args.test_batch_size, shuffle=True, num_workers=num_worker)
+    traintestloader = torch.utils.data.DataLoader(traintestset, batch_size=args.test_batch_size, shuffle=False, num_workers=num_worker)
+    testloader = torch.utils.data.DataLoader(testset, batch_size=args.test_batch_size, shuffle=False, num_workers=num_worker)
+    refloader = torch.utils.data.DataLoader(refset, batch_size=args.test_batch_size, shuffle=False, num_workers=num_worker)
 
 
     original_train_label = train_label.copy()

@@ -148,7 +148,7 @@ python data_partition.py
 First prepare the non_model indices for defenfer's Split-AI
 ```
 cd $datasetname/SELENA/
-python generate10.py
+python generation10.py
 ```
 Then train the models for Split-AI
 ```
@@ -172,7 +172,7 @@ To evaluate the final protected model (models via self-distillation from Split-A
 First prepare the non_model indices for attacker's shadow Split-AI
 ```
 cd $datasetname/SELENA/adaptive_attack
-python generate10.py
+python generation10.py
 ```
 Then train attacker's shadow Split-AI
 ```
