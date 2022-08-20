@@ -127,14 +127,9 @@ Before running code, you may need to follow these three steps to prepare:
 
 - Specify you ```root_dir``` and ```src_dir``` in env.yml. ```root_dir``` is the root directory to save the data and checkpoints (corresponds to MIA_root_dir in [`Files`](./README.md#files)). ```src_dir``` is the root directory of the sourcecode (should endwith this repository name ```MIAdefenseSELENA```).
 
-- Installing required packages.
-  - The code is tested with python 3.8.5, PyTorch 1.11.0 (for most of the experiments) and TensorFlow-2.9.1 (for MemGuard). The complete list of required packages are available in `requirement.txt`, and can be installed with `pip install -r requirement.txt`.
+- Installing required packages. The code is tested with python 3.8.5, PyTorch 1.11.0 (for most of the experiments) and TensorFlow-2.9.1 (for MemGuard). The complete list of required packages are available in `requirement.txt`, and can be installed with `pip install -r requirement.txt`.
 
-- Prepare Datasets
-  - Purchase100 [[link](https://www.comp.nus.edu.sg/~reza/files/dataset_purchase.tgz)].
-  - Texas100 [[link](https://www.comp.nus.edu.sg/~reza/files/dataset_texas.tgz)]. 
-  - CIFAR100 [[link](http://www.cs.toronto.edu/~kriz/cifar.html)].
-  - You prepare all three datasets by simply running the following command:
+- Preparing Datasets. We use three datasets: Purchase100 [[link](https://www.comp.nus.edu.sg/~reza/files/dataset_purchase.tgz)], Texas100 [[link](https://www.comp.nus.edu.sg/~reza/files/dataset_texas.tgz)], CIFAR100 [[link](http://www.cs.toronto.edu/~kriz/cifar.html)]. You can prepare all three datasets by simply running the following command:
 ```
 python prepare_datatset.py
 ```
