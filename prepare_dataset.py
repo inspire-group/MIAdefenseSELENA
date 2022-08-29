@@ -12,9 +12,11 @@ with open(config_file, 'r') as stream:
     root_dir = yamlfile['root_dir']
     src_dir = yamlfile['src_dir']
 ##prepare
-shutil.move(os.path.join(src_dir, 'memguard'), os.path.join(root_dir, 'memguard'))
+if os.path.exists(os.path.join(src_dir, 'memguard')):
+    shutil.move(os.path.join(src_dir, 'memguard'), os.path.join(root_dir, 'memguard'))
 
-
+if not os.path.exists(os.path.join(root_dir, 'tmp')):
+    os.makedirs(os.path.join(root_dir, 'tmp'))
 ###assumeing two tar files dataset_purcahse.tgz and dataset_texas.tgz are saved in root_dir/tmp.
 ####prepare purchase dataset
 if not os.path.isfile(os.path.join(root_dir, 'tmp', 'dataset_purchase.tgz')):
